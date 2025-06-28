@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 
 import { ArticleModule } from './article/article.module';
 import { CategoryModule } from './category/category.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { CategoryModule } from './category/category.module';
     }),
     ArticleModule,
     CategoryModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
