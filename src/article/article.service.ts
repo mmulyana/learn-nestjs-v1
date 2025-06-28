@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 
 import { createArticleDto } from './dto/create-article.dto';
 import { updateArticleDto } from './dto/update-article.dto';
-import { IArticle } from './interface/article.interface';
 import { Article } from './entities/article.entity';
 
 @Injectable()
