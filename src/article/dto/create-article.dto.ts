@@ -1,5 +1,6 @@
-import { IsNotEmpty, IsString, IsEnum } from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum, IsUUID } from 'class-validator';
 import { ArticleStatus } from '../interface/article.interface';
+import { Optional } from '@nestjs/common';
 export class createArticleDto {
   @IsNotEmpty()
   @IsString()
@@ -12,4 +13,10 @@ export class createArticleDto {
   @IsNotEmpty()
   @IsEnum(ArticleStatus)
   status: ArticleStatus;
+
+  @IsUUID()
+  @Optional()
+  categoryId: string;
+
+  
 }

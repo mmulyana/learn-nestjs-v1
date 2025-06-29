@@ -1,3 +1,4 @@
+import { FileInterceptor } from '@nestjs/platform-express'
 import {
   Body,
   Controller,
@@ -9,12 +10,17 @@ import {
   Param,
   Post,
   Put,
+  Request,
+  UseGuards,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { createArticleDto } from './dto/create-article.dto';
-import { ArticleService } from './article.service';
-import { FindOneParams } from './dto/find-one.params';
 import { updateArticleDto } from './dto/update-article.dto';
+import { FindOneParams } from './dto/find-one.params';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { Article } from './entities/article.entity';
+import { ArticleService } from './article.service';
 
 @Controller('articles')
 export class ArticleController {
@@ -30,9 +36,15 @@ export class ArticleController {
     return await this.findOneOrFail(params.id);
   }
 
+  @UseGuards(AuthGuard)
   @Post()
-  async post(@Body() body: createArticleDto): Promise<Article> {
-    return await this.service.create(body);
+  @UseInterceptors(FileInterceptor('image'))
+  async post(
+    @Request() req,
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body: createArticleDto,
+  ): Promise<Article> {
+    return await this.service.create(req.user.id, body, file);
   }
 
   @Put('/:id')

@@ -29,7 +29,7 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('/getMe')
+  @Get('/me')
   async getUser(@Request() request): Promise<any> {
     return await this.authService.getUser(request.user.id);
   }

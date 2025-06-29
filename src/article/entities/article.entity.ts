@@ -4,8 +4,11 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import { ArticleStatus } from '../interface/article.interface';
+import { Category } from 'src/category/entities/category.entity';
+import { User } from 'src/auth/entities/user.entity';
 
 @Entity()
 export class Article {
@@ -15,10 +18,23 @@ export class Article {
   @Column()
   title: string;
 
-  @Column({
-    type: 'text',
-  })
+  @Column({ type: 'text' })
   content: string;
+
+  @Column({ nullable: true })
+  image: string;
+
+  @ManyToOne(() => Category, (category) => category.articles)
+  category: Category;
+
+  @Column({ type: 'uuid', nullable: true })
+  categoryId: string;
+
+  @ManyToOne(() => User, (user) => user.articles)
+  user: User;
+
+  @Column({ type: 'uuid', nullable: true })
+  userId: string;
 
   @Column({
     type: 'enum',

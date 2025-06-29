@@ -5,17 +5,33 @@ import { Repository } from 'typeorm';
 import { createArticleDto } from './dto/create-article.dto';
 import { updateArticleDto } from './dto/update-article.dto';
 import { Article } from './entities/article.entity';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 @Injectable()
 export class ArticleService {
   constructor(
     @InjectRepository(Article)
     private ArticleRepository: Repository<Article>,
+    private CloudinaryService: CloudinaryService,
   ) {}
 
-  async create(payload: createArticleDto): Promise<Article> {
-    const article = await this.ArticleRepository.save(payload);
-    return article;
+  async create(
+    userId: string,
+    payload: createArticleDto,
+    file?: Express.Multer.File,
+  ): Promise<Article> {
+    let image: string | undefined;
+
+    if (file) {
+      image = await this.CloudinaryService.UploadImageStream(file);
+    }
+
+    const article = this.ArticleRepository.create({
+      ...payload,
+      image,
+      userId,
+    });
+    return this.ArticleRepository.save(article);
   }
 
   async readAll(): Promise<Article[]> {
