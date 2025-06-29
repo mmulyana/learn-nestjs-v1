@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { config } from 'dotenv';
 import { jwtConstant } from './constants';
+import { AuthGuard } from './guard/auth.guard';
 
 config();
 
@@ -18,6 +19,7 @@ config();
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, AuthGuard],
+  exports: [JwtModule, AuthGuard],
 })
 export class AuthModule {}

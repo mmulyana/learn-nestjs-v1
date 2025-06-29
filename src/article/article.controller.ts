@@ -11,7 +11,6 @@ import {
   Put,
 } from '@nestjs/common';
 import { createArticleDto } from './dto/create-article.dto';
-import { IArticle } from './interface/article.interface';
 import { ArticleService } from './article.service';
 import { FindOneParams } from './dto/find-one.params';
 import { updateArticleDto } from './dto/update-article.dto';
