@@ -5,10 +5,12 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { ArticleStatus } from '../interface/article.interface';
 import { Category } from 'src/category/entities/category.entity';
 import { User } from 'src/auth/entities/user.entity';
+import { ArticleTag } from 'src/articleTag/entities/article-tag.entity';
 
 @Entity()
 export class Article {
@@ -42,6 +44,9 @@ export class Article {
     default: ArticleStatus.Pending,
   })
   status: string;
+
+  @OneToMany(() => ArticleTag, (articletag) => articletag.article)
+  articleTags: ArticleTag[];
 
   @CreateDateColumn()
   readonly createdAt: Date;
