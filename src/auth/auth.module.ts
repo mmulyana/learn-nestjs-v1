@@ -7,12 +7,13 @@ import { JwtModule } from '@nestjs/jwt';
 import { config } from 'dotenv';
 import { jwtConstant } from './constants';
 import { AuthGuard } from './guard/auth.guard';
+import { Profile } from 'src/profile/entities/profile.entity';
 
 config();
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Profile]),
     JwtModule.register({
       secret: jwtConstant.secret,
       signOptions: { expiresIn: '7d' },

@@ -11,7 +11,7 @@ export class UsersController {
   constructor(private readonly service: UsersService) {}
 
   @UseGuards(AuthGuard, RolesGuard)
-  @Roles(Role.USER)
+  @Roles(Role.ADMIN)
   @Get()
   async getUsers(): Promise<User[]> {
     return await this.service.getUsers();

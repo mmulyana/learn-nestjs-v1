@@ -17,6 +17,9 @@ export class UsersService {
         name: true,
         role: true,
         createdAt: true,
+        profile: {
+          bio: true
+        }
       },
     });
   }

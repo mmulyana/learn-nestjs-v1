@@ -67,7 +67,10 @@ export class AuthService {
   }
 
   async getUser(id: string): Promise<any> {
-    const user = await this.userRepository.findOneBy({ id });
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['profile'],
+    });
 
     if (!user) return null;
 
